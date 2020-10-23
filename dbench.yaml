@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: dbench-pv-claim
 spec:
-  storageClassName: ssd
+  storageClassName: ibm-spectrum-scale-csi-fileset-independent
   # storageClassName: gp2
   # storageClassName: local-storage
   # storageClassName: ibmc-block-bronze
@@ -13,7 +13,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1000Gi
+      storage: 5Gi
 ---
 apiVersion: batch/v1
 kind: Job
@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: dbench
-        image: logdna/dbench:latest
+        image: image-registry.openshift-image-registry.svc:5000/harald-test-04-dbench/dbench:latest
         imagePullPolicy: Always
         env:
           - name: DBENCH_MOUNTPOINT
